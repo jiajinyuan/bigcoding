@@ -3,12 +3,21 @@ package com.sefonsfot.hbase.demo;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
 public class HbaseDemo {
+
+    private String quorum;
+    private String port;
+    private String parent;
+
+    public HbaseDemo(String quorum, String port, String parent) {
+        this.quorum = quorum;
+        this.port = port;
+        this.parent = parent;
+    }
 
     /**
      * 获取Hbase连接
@@ -18,8 +27,10 @@ public class HbaseDemo {
      */
     public Connection getConnection() throws IOException {
         Configuration conf = HBaseConfiguration.create();
-        Connection conn = ConnectionFactory.createConnection(conf);
-        return conn;
+        conf.set("hbase.zookeeper.quorum", quorum);
+        conf.set("hbase.zookeeper.property.clientPort", port);
+        conf.set("zookeeper.znode.parent", parent);
+        return ConnectionFactory.createConnection(conf);
     }
 
     /**
@@ -74,11 +85,17 @@ public class HbaseDemo {
         // 获取Admin
         Admin admin = getConnection().getAdmin();
         // 获取符合规则的TableName
-        TableName[] tableNames = admin.listTableNames(regex);
+        TableName[] tableNames;
+        if (null == regex || "".equals(regex)) {
+            tableNames = admin.listTableNames();
+        } else {
+            tableNames = admin.listTableNames(regex);
+        }
         // 遍历获取表名
         for (TableName tableName : tableNames) {
             System.out.println(new String(tableName.getName()));
         }
+        admin.close();
     }
 
     /**
