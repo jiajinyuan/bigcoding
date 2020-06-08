@@ -26,11 +26,13 @@ public class HdfsDemo {
             // 设置访问hdfs的用户
             System.setProperty("HADOOP_USER_NAME", "hdfs");
             // 设置访问的文件系统URI
-            FileSystem fileSystem = FileSystem.get(new URI("hdfs://10.0.6.103:8020"), conf);
-            return fileSystem;
+            return FileSystem.get(new URI("hdfs://10.0.6.103:8020"), conf, "hdfs");
         } catch (IOException e) {
             return null;
         } catch (URISyntaxException e) {
+            return null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
             return null;
         }
     }

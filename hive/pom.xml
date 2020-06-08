@@ -21,20 +21,20 @@
         </dependency>
         <dependency>
             <groupId>org.apache.hive.hcatalog</groupId>
-            <artifactId>hive-webhcat-java-client</artifactId>
+            <artifactId>hive-hcatalog-core</artifactId>
             <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hive.hcatalog</groupId>
-            <artifactId>hive-hcatalog-core</artifactId>
+            <artifactId>hive-webhcat-java-client</artifactId>
             <version>2.1.0</version>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>spring-plugin</id>
-            <url>https://maven.aliyun.com/nexus/content/repositories/spring-plugin</url>
+            <id>jcenter</id>
+            <url>https://maven.aliyun.com/repository/jcenter</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
